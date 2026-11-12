@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PurchaseAction {
+  BUY_NOW
+  DEMO
+  WHATSAPP
+  INSTAGRAM
+  CUSTOMIZATION
+}
+enum PricingModel {
+  ONE_TIME
+  MONTHLY
+  CUSTOM
+}
+enum ProjectCategory {
+  WEB
+  MOBILE
+  AI
+  SAAS
+  AUTOMATION
+  ENTERPRISE
+}
+enum EnquiryType {
+  CONTACT
+  QUOTE
+  PRODUCT
+  DEMO
+}
+enum EnquiryStatus {
+  NEW
+  CONTACTED
+  CLOSED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model ProductCategory {
+  id       String    @id @default(cuid())
+  slug     String    @unique
+  name     String
+  products Product[]
+}
+
+model Product {
+  id             String          @id @default(cuid())
+  slug           String          @unique
+  name           String
+  tagline        String
+  description    String
+  problem        String
+  audience       String
+  icon           String          @default("box")
+  accentFrom     String          @default("#3B6CFF")
+  accentTo       String          @default("#7C5CFF")
+  features       String[]
+  benefits       String[]
+  faqs           Json            @default("[]")
+  screenshots    String[]
+  demoVideoUrl   String?
+  priceINR       Int?
+  priceUSD       Int?
+  pricingModel   PricingModel    @default(ONE_TIME)
+  pricingNote    String?
+  purchaseAction PurchaseAction  @default(WHATSAPP)
+  buyUrl         String?
+  featured       Boolean         @default(false)
+  published      Boolean         @default(true)
+  isSample       Boolean         @default(true)
+  category       ProductCategory @relation(fields: [categoryId], references: [id])
+  categoryId     String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model Service {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  tagline      String
+  summary      String
+  icon         String   @default("code")
+  problems     String[]
+  deliverables String[]
+  technologies String[]
+  approach     String
+  order        Int      @default(0)
+  published    Boolean  @default(true)
+}
+
+model Industry {
+  id         String   @id @default(cuid())
+  slug       String   @unique
+  name       String
+  summary    String
+  icon       String   @default("building")
+  challenges String[]
+  solutions  String[]
+  automation String[]
+  tech       String[]
+  benefits   String[]
+  order      Int      @default(0)
+  published  Boolean  @default(true)
+}
+
+model Project {
+  id         String          @id @default(cuid())
+  slug       String          @unique
+  title      String
+  client     String
+  category   ProjectCategory
+  summary    String
+  problem    String
+  solution   String
+  tech       String[]
+  features   String[]
+  results    String?
+  accentFrom String          @default("#3B6CFF")
+  accentTo   String          @default("#7C5CFF")
+  isSample   Boolean         @default(true)
+  published  Boolean         @default(true)
+  createdAt  DateTime        @default(now())
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  excerpt     String
+  content     String
+  category    String
+  readMinutes Int       @default(5)
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+model Enquiry {
+  id          String         @id @default(cuid())
+  type        EnquiryType
+  status      EnquiryStatus  @default(NEW)
+  name        String
+  email       String
+  company     String?
+  phone       String?
+  service     String?
+  budget      String?
+  timeline    String?
+  contactPref String?
+  productSlug String?
+  message     String
+  meta        Json?
+  createdAt   DateTime       @default(now())
+}
