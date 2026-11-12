@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Altivox Software Consultancy: website
 
-## Getting Started
+Next.js 16 · TypeScript · Tailwind 4 · Prisma 7 + PostgreSQL · motion. See `docs/RESEARCH-AND-PLAN.md`.
 
-First, run the development server:
-
+## Run locally
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run db:dev        # terminal 1: embedded Postgres on :54329 (no Docker)
+npm run db:push       # terminal 2: create tables
+npm run db:seed       # demo products/services/etc + admin user
+npm run dev           # http://localhost:3000   · admin: /admin/login
 ```
+Config lives in `.env.local` (see `.env.example`). Admin credentials come from `ADMIN_EMAIL` / `ADMIN_PASSWORD` at seed time. **Change them before deploying.**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deploy (all free tiers)
+1. **Neon**: create a project, copy the *pooled* connection string into `DATABASE_URL`; run `npx prisma db push` and `npm run db:seed` against it.
+2. **Resend**: create an API key (free tier); set `RESEND_API_KEY`, `EMAIL_TO`. Until you verify a domain, Resend only sends from `onboarding@resend.dev` to your own account email.
+3. **Vercel**: import the repo, add all env vars from `.env.example` (`AUTH_SECRET`: `openssl rand -base64 48`), deploy.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Notes
+- Demo products/projects carry a "Demo/Sample" badge; edit or replace them in `/admin`.
+- `BUY_NOW` products use their `buyUrl` (payment link) if set, otherwise fall back to an enquiry, which is where Razorpay/Stripe plugs in later.
+- Rate limiting is in-memory (per serverless instance); move to Upstash Redis free tier if abuse appears.
