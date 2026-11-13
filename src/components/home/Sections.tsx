@@ -75,7 +75,7 @@ export function WhySection() {
         </div>
         <ol className="divide-y divide-line border-y border-line">
           {why.map(([t, d], i) => (
-            <Reveal key={t}><li className="flex gap-6 py-7"><span className="font-mono text-sm text-violet">{String(i + 1).padStart(2, "0")}</span><div><h3 className="text-xl font-semibold tracking-tight">{t}</h3><p className="mt-1.5 text-muted">{d}</p></div></li></Reveal>
+            <li key={t}><Reveal><div className="flex gap-6 py-7"><span className="font-mono text-sm text-violet">{String(i + 1).padStart(2, "0")}</span><div><h3 className="text-xl font-semibold tracking-tight">{t}</h3><p className="mt-1.5 text-muted">{d}</p></div></div></Reveal></li>
           ))}
         </ol>
       </div>
@@ -107,7 +107,7 @@ export function ProcessSection() {
       <SectionHeading eyebrow="How we work" title="A clear path from idea to launch." intro="Eight stages, each with a defined outcome, so you always know where your project stands." />
       <ol className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
         {steps.map((s, i) => (
-          <Reveal key={s} delay={(i % 4) * 0.05} className="bg-ink"><li className="p-7"><span className="font-mono text-xs text-violet">Step {String(i + 1).padStart(2, "0")}</span><h3 className="mt-8 text-lg font-semibold tracking-tight">{s}</h3></li></Reveal>
+          <li key={s} className="bg-ink"><Reveal delay={(i % 4) * 0.05} className="h-full"><div className="h-full p-7"><span className="font-mono text-xs text-violet">Step {String(i + 1).padStart(2, "0")}</span><h3 className="mt-8 text-lg font-semibold tracking-tight">{s}</h3></div></Reveal></li>
         ))}
       </ol>
     </Section>

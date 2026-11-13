@@ -79,7 +79,7 @@ export default async function ProductPage({ params }: Props) {
       <Section className="!py-16">
         <div className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-line bg-surface p-8 sm:flex-row sm:items-center">
           <div><h2 className="text-2xl font-semibold">Questions about {p.name}?</h2><p className="mt-1 text-muted">Talk to us before you decide. We&apos;re happy to help.</p></div>
-          <div className="flex gap-3">{cta && (cta.external ? <a href={cta.href} target="_blank" rel="noopener noreferrer" className={btnPrimary}>{cta.label}</a> : <Link href={cta.href} className={btnPrimary}>{cta.label}</Link>)}<a href={support} className={btnGhost}>Contact support</a></div>
+          <div className="flex flex-wrap gap-3">{cta && (cta.external ? <a href={cta.href} target="_blank" rel="noopener noreferrer" className={btnPrimary}>{cta.label}</a> : <Link href={cta.href} className={btnPrimary}>{cta.label}</Link>)}<a href={support} className={btnGhost}>Contact support</a></div>
         </div>
       </Section>
 

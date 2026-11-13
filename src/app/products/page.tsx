@@ -13,7 +13,7 @@ export default async function ProductsPage() {
   return (
     <>
       <PageHeader eyebrow="Products" title={<>Software you can start using <span className="text-gradient">this week.</span></>} intro="Purpose-built tools with transparent starter pricing. Buy online, request a demo, or ask us to tailor one to your business." />
-      <Section className="!pt-12"><ProductBrowser products={items} categories={categories} />
+      <Section className="!pt-12"><h2 className="sr-only">All products</h2><ProductBrowser products={items} categories={categories} />
         <p className="mt-10 text-xs text-muted">These are demonstration listings; prices are indicative starter prices in INR and USD and may change.</p></Section>
       <FinalCta />
     </>
