@@ -9,7 +9,8 @@ export const metadata: Metadata = { title: "Contact Us", description: "Contact A
 
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ product?: string; type?: string }> }) {
   const sp = await searchParams;
-  const [services, product] = await Promise.all([getServices(), sp.product ? getProduct(sp.product) : null]);
+  // The form must still render if the database is briefly unavailable, so lookups degrade to empty.
+  const [services, product] = await Promise.all([getServices().catch(() => []), sp.product ? getProduct(sp.product).catch(() => null) : null]);
   const type = product ? (sp.type === "DEMO" ? "DEMO" : "PRODUCT") : "CONTACT";
   const channels = [
     site.contact.email && { icon: Mail, label: "Email", value: site.contact.email, href: `mailto:${site.contact.email}` },

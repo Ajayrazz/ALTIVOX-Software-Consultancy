@@ -1,4 +1,5 @@
 import "server-only";
+import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
 
 export const getCategories = () => db.productCategory.findMany({ orderBy: { name: "asc" } });
@@ -12,9 +13,18 @@ export const getProducts = (opts: { featured?: boolean; take?: number } = {}) =>
   });
 
 export const getProduct = (slug: string) =>
-  db.product.findFirst({ where: { slug, published: true }, include: { category: true } });
+  unstable_cache(
+    () => db.product.findFirst({ where: { slug, published: true }, include: { category: true } }),
+    ["product", slug],
+    { revalidate: 300, tags: ["content"] },
+  )();
 
-export const getServices = () => db.service.findMany({ where: { published: true }, orderBy: { order: "asc" } });
+// Cached 5 min: used by the always-dynamic /contact page, so it must not hit the DB on every visit.
+export const getServices = unstable_cache(
+  () => db.service.findMany({ where: { published: true }, orderBy: { order: "asc" } }),
+  ["services-list"],
+  { revalidate: 300, tags: ["content"] },
+);
 export const getService = (slug: string) => db.service.findFirst({ where: { slug, published: true } });
 
 export const getIndustries = () => db.industry.findMany({ where: { published: true }, orderBy: { order: "asc" } });

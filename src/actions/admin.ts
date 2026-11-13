@@ -1,5 +1,5 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -8,7 +8,7 @@ import { requireAdmin } from "@/lib/dal";
 const lines = (s: FormDataEntryValue | null) => String(s ?? "").split("\n").map((x) => x.trim()).filter(Boolean);
 const num = (s: FormDataEntryValue | null) => { const n = parseInt(String(s ?? ""), 10); return Number.isFinite(n) ? n : null; };
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-const bust = () => { for (const p of ["/", "/products", "/blog", "/work", "/services", "/sitemap.xml"]) revalidatePath(p); revalidatePath("/products/[slug]", "page"); revalidatePath("/blog/[slug]", "page"); };
+const bust = () => { revalidateTag("content", "max"); for (const p of ["/", "/products", "/blog", "/work", "/services", "/sitemap.xml"]) revalidatePath(p); revalidatePath("/products/[slug]", "page"); revalidatePath("/blog/[slug]", "page"); };
 
 const productSchema = z.object({
   name: z.string().trim().min(2).max(80), tagline: z.string().trim().min(2).max(160),
