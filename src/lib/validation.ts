@@ -7,7 +7,7 @@ export const enquirySchema = z.object({
   name: clean(100).min(2, "Please enter your name"),
   email: clean(160).email("Enter a valid email address"),
   company: clean(120).optional(),
-  phone: clean(30).regex(/^[+\d][\d\s\-()]{6,}$/, "Enter a valid phone number").optional().or(z.literal("")),
+  phone: clean(30).refine((v) => v === "" || (/^[+(]?[\d\s\-().]+$/.test(v) && v.replace(/\D/g, "").length >= 7), "Enter a valid phone number").optional(),
   service: clean(120).optional(),
   budget: clean(60).optional(),
   timeline: clean(60).optional(),
