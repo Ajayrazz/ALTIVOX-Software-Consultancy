@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Inbox, Mail, Package, FileText, Plus, ArrowUpRight, Star } from "lucide-react";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/dal";
-import { TiltCard } from "@/components/admin/TiltCard";
+import { TiltCard } from "@/components/3d/TiltCard";
 import { CountUp } from "@/components/admin/CountUp";
 import { ActivityChart } from "@/components/admin/ActivityChart";
 import { AdminHeader, Panel, Avatar, TypeBadge, StatusBadge, btnSolid, btnOutline } from "@/components/admin/ui";

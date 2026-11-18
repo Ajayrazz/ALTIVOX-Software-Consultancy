@@ -4,7 +4,7 @@ import { login } from "@/actions/auth";
 import { LogoMark } from "@/components/Logo";
 import { Field, Input } from "@/components/forms/fields";
 import { btnPrimary } from "@/components/ui/Section";
-import { TiltCard } from "@/components/admin/TiltCard";
+import { TiltCard } from "@/components/3d/TiltCard";
 
 export default function LoginPage() {
   const [state, action, pending] = useActionState(login, null);

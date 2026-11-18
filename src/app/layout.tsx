@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { HideOnAdmin } from "@/components/SiteChrome";
+import { Providers } from "@/components/Providers";
 import { site } from "@/lib/site";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -29,9 +30,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-fg focus:px-3 focus:py-2 focus:text-ink">
           Skip to content
         </a>
-        <HideOnAdmin><Navbar /></HideOnAdmin>
-        <main id="main">{children}</main>
-        <HideOnAdmin><Footer /></HideOnAdmin>
+        <Providers>
+          <HideOnAdmin><Navbar /></HideOnAdmin>
+          <main id="main">{children}</main>
+          <HideOnAdmin><Footer /></HideOnAdmin>
+        </Providers>
       </body>
     </html>
   );

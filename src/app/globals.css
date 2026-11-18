@@ -81,11 +81,66 @@ body {
   border-radius: 4px;
 }
 
+/* ---------- 3D utilities ---------- */
+.preserve-3d { transform-style: preserve-3d; }
+
+.cube3d {
+  position: relative;
+  width: var(--s, 80px);
+  height: var(--s, 80px);
+  transform-style: preserve-3d;
+  animation: cube-spin 22s linear infinite;
+}
+.cube3d > i {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  background: linear-gradient(135deg, rgb(59 108 255 / 0.28), rgb(124 92 255 / 0.1) 60%, rgb(61 217 235 / 0.12));
+  box-shadow: inset 0 0 24px rgb(124 92 255 / 0.25);
+}
+.cube3d > i:nth-child(1) { transform: translateZ(calc(var(--s, 80px) / 2)); }
+.cube3d > i:nth-child(2) { transform: rotateY(90deg) translateZ(calc(var(--s, 80px) / 2)); }
+.cube3d > i:nth-child(3) { transform: rotateY(180deg) translateZ(calc(var(--s, 80px) / 2)); }
+.cube3d > i:nth-child(4) { transform: rotateY(-90deg) translateZ(calc(var(--s, 80px) / 2)); }
+.cube3d > i:nth-child(5) { transform: rotateX(90deg) translateZ(calc(var(--s, 80px) / 2)); }
+.cube3d > i:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--s, 80px) / 2)); }
+@keyframes cube-spin {
+  from { transform: rotateX(-22deg) rotateY(0deg) rotateZ(8deg); }
+  to { transform: rotateX(-22deg) rotateY(360deg) rotateZ(8deg); }
+}
+
+.ring3d {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid rgb(124 92 255 / 0.55);
+  box-shadow: 0 0 28px rgb(59 108 255 / 0.25), inset 0 0 28px rgb(124 92 255 / 0.18);
+  transform-style: preserve-3d;
+}
+.ring3d.r1 { animation: ring-a 16s linear infinite; }
+.ring3d.r2 { inset: 14%; border-color: rgb(61 217 235 / 0.5); animation: ring-b 12s linear infinite; }
+.ring3d.r3 { inset: 28%; border-color: rgb(59 108 255 / 0.6); animation: ring-c 9s linear infinite; }
+@keyframes ring-a { from { transform: rotateX(70deg) rotateZ(0deg); } to { transform: rotateX(70deg) rotateZ(360deg); } }
+@keyframes ring-b { from { transform: rotateY(70deg) rotateZ(0deg); } to { transform: rotateY(70deg) rotateZ(-360deg); } }
+@keyframes ring-c { from { transform: rotateX(30deg) rotateY(30deg) rotateZ(0deg); } to { transform: rotateX(30deg) rotateY(30deg) rotateZ(360deg); } }
+
+@keyframes fade-up { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+.fade-up { animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee-track { animation: marquee 38s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+@keyframes orbit-glow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+.orbit-floor { animation: orbit-glow 6s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .flow-line, .float-slow { animation: none; }
+  .flow-line, .float-slow, .cube3d, .ring3d, .marquee-track, .orbit-floor, .fade-up { animation: none !important; }
   *, *::before, *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
+
