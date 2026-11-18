@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
+import { Rings3D } from "@/components/3d/Shapes3D";
+import { Constellation } from "@/components/3d/Constellation";
 
 export function Section({ children, className = "", id }: { children: ReactNode; className?: string; id?: string }) {
   return (
@@ -30,7 +32,9 @@ export function SectionHeading({ eyebrow, title, intro, action }: { eyebrow: str
 export function PageHeader({ eyebrow, title, intro, children }: { eyebrow: string; title: ReactNode; intro?: string; children?: ReactNode }) {
   return (
     <header className="relative overflow-hidden border-b border-line pt-32 sm:pt-40">
-      <div className="grid-bg pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
+      <div className="grid-bg pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
+      <div className="absolute inset-0 opacity-70 [mask-image:linear-gradient(to_bottom,#000_40%,transparent)]"><Constellation density={20000} maxNodes={45} /></div>
+      <Rings3D size={230} className="absolute right-[6%] top-28 hidden opacity-80 lg:block" />
       <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-[700px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_top,rgb(124_92_255/0.18),transparent_65%)]" aria-hidden="true" />
       <div className="relative mx-auto max-w-7xl px-5 pb-16 sm:px-8 sm:pb-20">
         <p className="eyebrow">{eyebrow}</p>

@@ -79,6 +79,9 @@ export function Footer() {
           </div>
         ))}
       </div>
+      <div aria-hidden="true" className="pointer-events-none select-none overflow-hidden px-4" style={{ perspective: 900 }}>
+        <p className="bg-gradient-to-b from-white/[0.16] via-white/[0.05] to-transparent bg-clip-text text-center text-[19vw] font-semibold leading-[0.9] tracking-[0.08em] text-transparent sm:text-[15vw]" style={{ transform: "rotateX(24deg)", transformOrigin: "50% 100%" }}>ALTIVOX</p>
+      </div>
       <div className="border-t border-line">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <p>© 2026 {site.legalName}. All rights reserved.</p>

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Check } from "lucide-react";
 import { getProduct, getProducts } from "@/lib/queries";
-import { ProductCover } from "@/components/ProductCover";
+import { ProductHero3D } from "@/components/ProductHero3D";
 import { ProductCard } from "@/components/ProductCard";
 import { Section, SampleBadge, btnPrimary, btnGhost } from "@/components/ui/Section";
 import { FaqList } from "@/components/home/Sections";
@@ -54,7 +54,7 @@ export default async function ProductPage({ params }: Props) {
             </div>
             <div className="mt-6"><ShareLinks path={`/products/${p.slug}`} title={p.name} /></div>
           </div>
-          <ProductCover slug={p.slug} icon={p.icon} from={p.accentFrom} to={p.accentTo} name={p.name} className="shadow-2xl shadow-black/40" />
+          <ProductHero3D slug={p.slug} icon={p.icon} from={p.accentFrom} to={p.accentTo} name={p.name} category={p.category.name} price={`${price.main}${price.sub ? " · " + price.sub.split(" · ")[0] : ""}`} />
         </div>
       </section>
 
